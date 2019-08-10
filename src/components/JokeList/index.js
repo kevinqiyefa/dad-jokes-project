@@ -1,14 +1,21 @@
 import React from 'react';
 import {useFetch} from '../../api/FetchData';
+import Joke from '../Joke';
 
 import './style.css';
 
 
 function JokeList() {
     
-    const [jokes, isLoading] = useFetch('https://icanhazdadjoke.com/');
+    const [jokes, isLoading, setJokes] = useFetch('https://icanhazdadjoke.com/');
 
-    const renderJokes = ()=>(jokes.map((j, idx)=>(<div key={idx}>{j}</div>)))
+    const handleVotes = (id, delta) =>{
+        setJokes(jokes.map(j=>(
+            j.id===id ? {...j, votes: j.votes+delta} : j
+        )))
+    }
+
+    const renderJokes = () =>(jokes.map((j)=>(<Joke key={j.id} joke={j.joke} votes={j.votes} handleVotes={handleVotes} id={j.id} />)))
 
     return (
         <div className='JokeList'>

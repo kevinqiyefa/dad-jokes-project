@@ -3,6 +3,7 @@
 
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import uuid from 'uuid/v4'
 
 const useFetch = url => {
 
@@ -16,7 +17,7 @@ const useFetch = url => {
     let jokes = [];
     while(jokes.length < NumJokesToGet){
       const response = await axios.get(url, {headers:{Accept: 'application/json'}});
-      jokes.push(response.data.joke)
+      jokes.push({id: uuid(),joke:response.data.joke, votes: 0})
 
     }
     setData(jokes);
@@ -30,6 +31,6 @@ const useFetch = url => {
   }, []);
 
 
-  return [data, loading];
+  return [data, loading, setData];
 };
 export { useFetch };
