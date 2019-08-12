@@ -9,7 +9,7 @@ const useFetch = url => {
 
   const NumJokesToGet = 10;
 
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(JSON.parse(sessionStorage.getItem("jokes") || "[]"));
   const [loading, setLoading] = useState(true);
 
 
@@ -22,11 +22,14 @@ const useFetch = url => {
     }
     setData(jokes);
     setLoading(false);
+    sessionStorage.setItem("jokes", JSON.stringify(jokes));
   };
 
 
   useEffect(() => {
-   fetchData();
+    
+   if(data.length === 0) fetchData();
+   setLoading(false);
    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
