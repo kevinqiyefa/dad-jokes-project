@@ -1,6 +1,7 @@
 import React from 'react';
 import {useFetch} from '../../api/FetchData';
 import Joke from '../Joke';
+import Loader from '../Loader';
 
 import './style.css';
 
@@ -17,6 +18,7 @@ function JokeList() {
 
     const renderJokes = () =>(jokes.map((j)=>(<Joke key={j.id} joke={j.joke} votes={j.votes} handleVotes={handleVotes} id={j.id} />)))
 
+
     return (
         <div className='JokeList'>
             <div className='JokeList-sidebar'>
@@ -29,10 +31,11 @@ function JokeList() {
                 <button className='JokeList-getmore'>New Jokes</button>
          
             </div>
-            
+
             <div className='JokeList-jokes'>
-                {renderJokes()}
+                { isLoading ? <div className='Joke-Loader'><Loader /></div> : renderJokes() }
             </div>
+            
         </div>
     )
 }
