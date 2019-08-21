@@ -15,9 +15,9 @@ const useFetch = url => {
 
   const fetchData = async () => {
     let jokes = [];
-    while(jokes.length < NumJokesToGet){
-      const response = await axios.get(url, {headers:{Accept: 'application/json'}});
-      jokes.push({id: uuid(),joke:response.data.joke, votes: 0})
+    while (jokes.length < NumJokesToGet) {
+      const response = await axios.get(url, { headers: { Accept: 'application/json' } });
+      jokes.push({ id: uuid(), joke: response.data.joke, votes: 0 })
 
     }
     setData(jokes);
@@ -27,10 +27,10 @@ const useFetch = url => {
 
 
   useEffect(() => {
-    
-   if(data.length === 0) fetchData();
-   setLoading(false);
-   // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    if (data.length === 0) fetchData();
+    setLoading(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
 
