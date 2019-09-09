@@ -65,7 +65,6 @@ function Joke(props) {
   );
 }
 
-//check the votes, only updates the differences.
-const areEqual = (prevProps, nextProps) => prevProps.votes === nextProps.votes;
 
-export default React.memo(Joke, areEqual);
+
+export default React.memo(Joke);

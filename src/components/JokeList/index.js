@@ -1,12 +1,15 @@
 import React from 'react';
-import { useFetch } from '../../api/FetchData';
+import { useFetchJokes } from '../../api/FetchData';
 import Joke from '../Joke';
 import Loader from '../Loader';
 
 import './style.css';
 
 function JokeList() {
-  const [jokes, isLoading, setJokes] = useFetch('https://icanhazdadjoke.com/');
+  const [jokes, isLoading, setJokes] = useFetchJokes(
+    'https://icanhazdadjoke.com/',
+    10
+  );
 
   const happyFaceURL =
     'https://assets.dryicons.com/uploads/icon/svg/8927/0eb14c71-38f2-433a-bfc8-23d9c99b3647.svg';
