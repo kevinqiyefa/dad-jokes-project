@@ -6,9 +6,10 @@ const useFetchJokes = (url, NumJokesToGet) => {
   const [data, setData] = useState(() =>
     JSON.parse(sessionStorage.getItem('jokes') || '[]')
   );
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const fetchData = async () => {
+    setLoading(true);
     let jokes = [];
     while (jokes.length < NumJokesToGet) {
       const response = await axios.get(url, {
@@ -23,7 +24,6 @@ const useFetchJokes = (url, NumJokesToGet) => {
 
   useEffect(() => {
     if (data.length === 0) fetchData();
-    setLoading(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
