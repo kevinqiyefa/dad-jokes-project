@@ -10,16 +10,17 @@ const useFetchJokes = (url, NumJokesToGet) => {
 
   const fetchData = async () => {
     setLoading(true);
-    let jokes = [];
-    while (jokes.length < NumJokesToGet) {
+    let tempJokes = [];
+    let count = 0;
+    while (count++ < NumJokesToGet) {
       const response = await axios.get(url, {
         headers: { Accept: 'application/json' }
       });
-      jokes.push({ id: uuid(), joke: response.data.joke, votes: 0 });
+      tempJokes.push({ id: uuid(), joke: response.data.joke, votes: 0 });
     }
-    setData(jokes);
+    setData([...data, ...tempJokes]);
     setLoading(false);
-    sessionStorage.setItem('jokes', JSON.stringify(jokes));
+    sessionStorage.setItem('jokes', JSON.stringify([...data, ...tempJokes]));
   };
 
   useEffect(() => {
@@ -27,6 +28,6 @@ const useFetchJokes = (url, NumJokesToGet) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return [data, loading, setData];
+  return [data, loading, setData, fetchData];
 };
 export { useFetchJokes };

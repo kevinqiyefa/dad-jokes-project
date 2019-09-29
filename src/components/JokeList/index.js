@@ -6,7 +6,7 @@ import Loader from '../Loader';
 import './style.css';
 
 function JokeList() {
-  const [jokes, isLoading, setJokes] = useFetchJokes(
+  const [jokes, isLoading, setJokes, fetchJokes] = useFetchJokes(
     'https://icanhazdadjoke.com/',
     10
   );
@@ -33,6 +33,15 @@ function JokeList() {
       />
     ));
 
+  if (jokes.length && isLoading) {
+    return (
+      <div className="JokeList-spinner">
+        <i className="far fa-5x fa-laugh fa-spin" />
+        <h1 className="JokeList-title">Loading...</h1>
+      </div>
+    );
+  }
+
   return (
     <div className="JokeList">
       <div className="JokeList-sidebar">
@@ -41,7 +50,9 @@ function JokeList() {
         </h1>
 
         <img src={happyFaceURL} alt="happy-face" />
-        <button className="JokeList-getmore">New Jokes</button>
+        <button className="JokeList-getmore" onClick={fetchJokes}>
+          New Jokes
+        </button>
       </div>
 
       <div className="JokeList-jokes">
