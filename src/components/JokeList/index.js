@@ -22,8 +22,10 @@ function JokeList() {
     sessionStorage.setItem('jokes', JSON.stringify(newJokes));
   };
 
+  let sortedJokes = jokes.sort((a, b) => b.votes - a.votes);
+
   const renderJokes = () =>
-    jokes.map(j => (
+    sortedJokes.map(j => (
       <Joke
         key={j.id}
         joke={j.joke}
@@ -51,7 +53,7 @@ function JokeList() {
 
         <img src={happyFaceURL} alt="happy-face" />
         <button className="JokeList-getmore" onClick={fetchJokes}>
-          New Jokes
+          Fetch Jokes
         </button>
       </div>
 
