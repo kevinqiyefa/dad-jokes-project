@@ -8,6 +8,8 @@ const useFetchJokes = (url, NumJokesToGet) => {
   );
   const [loading, setLoading] = useState(false);
 
+  const dataSet = new Set(data.map(j => j.joke));
+
   const fetchData = async () => {
     setLoading(true);
     let tempJokes = [];
@@ -16,8 +18,16 @@ const useFetchJokes = (url, NumJokesToGet) => {
       const response = await axios.get(url, {
         headers: { Accept: 'application/json' }
       });
-      tempJokes.push({ id: uuid(), joke: response.data.joke, votes: 0 });
+
+      const newJoke = response.data.joke;
+      if (dataSet.has(newJoke)) {
+        count--;
+      } else {
+        dataSet.add(newJoke);
+        tempJokes.push({ id: uuid(), joke: newJoke, votes: 0 });
+      }
     }
+
     setData([...data, ...tempJokes]);
     setLoading(false);
     sessionStorage.setItem('jokes', JSON.stringify([...data, ...tempJokes]));
